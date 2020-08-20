@@ -20,14 +20,16 @@ for this event listener, do the following:
      attribute a value of `true` (set the attribute directly with dot notation, 
      don't use `setAttribute()`).
 */
+let btn = document.querySelector('button');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   if (form.checkValidity()) {
     form.classList.add("d-none");
-    document.getElementsByClassName('alert').classList.remove("d-none");
+    var alert = document.querySelector('p');
+    alert.classList.remove("d-none");
   } else {
     form.classList.add("was-validated");
-    form.getElementsByClassName('btn').disabled = true;
+    btn.disabled = true;
   }
 });
 
@@ -70,10 +72,11 @@ recent; otherwise it should highlight as valid. Note that you'll need to hit
 */
 var dob = document.getElementById('dobInput');
 dob.addEventListener('input', function() {
-    var age = getYearsSince(document.getElementById('dobInput')).value;
+    var age = getYearsSince(dob.value);
     if (age < 13 || age > 200) {
         dob.setCustomValidity("You need to be at least 13 years old.");
-        dob.textContent = "You need to be at least 13 years old.";
+        var dobFeedback = document.getElementById('dobFeedback');
+        dobFeedback.textContent = "You need to be at least 13 years old.";
     } else {
       dob.setCustomValidity("");
     }
@@ -95,13 +98,14 @@ function `validatePasswordMatch()`. This function should access both password
 */
 let pwd1 = document.getElementById('passwordInput');
 let pwd2 = document.getElementById('passwordConfirmInput');
+var pwdFeedback = document.getElementById('passwordConfirmFeedback');
 function validatePasswordMatch() {
   if (pwd1.value == pwd2.value) {
     pwd2.setCustomValidity("");
-    pwd2.textContent = "";
+    pwdFeedback.textContent = "";
   } else {
     pwd2.setCustomValidity("Passwords do not match");
-    pwd2.textContent = "Passwords do not match";
+    pwdFeedback.textContent = "Passwords do not match";
   }
 }
 
@@ -125,14 +129,13 @@ if the <form> element has the `was-validated` class. If so, set the button's
 This should disable the button until all of the fields are valid, but only after
 the user tries to submit once (which is a polite user experience)
 */
-console.log(document.querySelectorAll('input'));
 let nodeList = document.querySelectorAll('input');
 for (var i = 0; i < nodeList.length; i++) {
-  nodeList[i].addEventListener('input', function(event) {
-    if (!form.classList.contains('was-validated')) {
-      form.getElementsByClassName('btn').disabled = true;
+  nodeList[i].addEventListener('input', function() {
+    if (form.classList.contains('was-validated')) {
+      btn.disabled = true;
     } else {
-      form.getElementsByClassName('btn').disabled = false;
+      btn.disabled = false;
     }
   });
 }
