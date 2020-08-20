@@ -70,7 +70,7 @@ recent; otherwise it should highlight as valid. Note that you'll need to hit
 */
 var dob = document.getElementById('dobInput');
 dob.addEventListener('input', function() {
-    var age = getYearsSince(document.getElementById('#dobInput')).value;
+    var age = getYearsSince(document.getElementById('dobInput')).value;
     if (age < 13 || age > 200) {
         dob.setCustomValidity("You need to be at least 13 years old.");
         dob.textContent = "You need to be at least 13 years old.";
@@ -96,7 +96,7 @@ function `validatePasswordMatch()`. This function should access both password
 let pwd1 = document.getElementById('passwordInput');
 let pwd2 = document.getElementById('passwordConfirmInput');
 function validatePasswordMatch() {
-  if (pwd1 == pwd2) {
+  if (pwd1.value == pwd2.value) {
     pwd2.setCustomValidity("");
     pwd2.textContent = "";
   } else {
@@ -127,7 +127,6 @@ the user tries to submit once (which is a polite user experience)
 */
 document.querySelectorAll('input').forEach(element =>
   element.addEventListener('input', function(event) {
-    console.log(element);
     if (!(event.classList.contains('was-validated'))) {
       form.getElementsByClassName('btn').disabled = true;
     } else {
