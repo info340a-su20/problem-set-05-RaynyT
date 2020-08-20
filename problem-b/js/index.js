@@ -1,6 +1,7 @@
 'use strict';
 
 //Create a variable `form` that refers to the `<form>` element in the DOM.
+var form = document.querySelector('form');
 
 /* Add an event listener to the `form` element that will listen for `'submit'` 
 type events (which occur when the form is submitted). In the callback function 
@@ -19,8 +20,16 @@ for this event listener, do the following:
      attribute a value of `true` (set the attribute directly with dot notation, 
      don't use `setAttribute()`).
 */
-
-
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  if (form.checkValidity()) {
+    form.classList.add("d-none");
+    document.getElementsByClassName('alert').classList.remove("d-none");
+  } else {
+    form.classList.add("was-validated");
+    document.getElementsByTagName('button').disabled = true;
+  }
+});
 
 /* You should now be able to submit the form and see it highlight fields that 
 are invalid. This validity is based on HTML attributes; for example, the "email"
@@ -33,7 +42,7 @@ attributes, so you'll need to use JavaScript to handle that! */
 //This function takes in a Date type value and returns the number of years
 //since that date (based on the current time). For example, if run in 2020:
 //    getYearsSince("2001-01-01") // returns 19
-function getYearsSince(aDate){
+function getYearsSince(aDate) {
   /* global moment */
   moment.suppressDeprecationWarnings = true; //don't worry about these now
   return moment().diff(moment(aDate), 'years');
@@ -55,12 +64,20 @@ this event handler, do the following:
   - If the person's age is NOT less than 13, use `setCustomValidity()` to set
     the `#dobInput` element's error to be an empty string `""` (this will
     remove the validation error).
-
 The "Date of Birth" should now show an error when empty or if the year is too
 recent; otherwise it should highlight as valid. Note that you'll need to hit
 "Sign me up!" first to enable the validation highlighting!
 */
-
+var dob = document.getElementById('dobInput');
+dob.addEventListener('input', function() {
+    var age = getYearsSince(document.getElementById('#dobInput')).value;
+    if (age < 13 || age > 200) {
+        dob.setCustomValidity("You need to be at least 13 years old.");
+        dob.textContent = "You need to be at least 13 years old.";
+    } else {
+      dob.setCustomValidity("");
+    }
+});
 
 
 /* Next you'll make sure the two "password" fields match. Start by defining a
