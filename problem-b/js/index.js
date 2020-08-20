@@ -125,15 +125,17 @@ if the <form> element has the `was-validated` class. If so, set the button's
 This should disable the button until all of the fields are valid, but only after
 the user tries to submit once (which is a polite user experience)
 */
-document.querySelectorAll('input').forEach(element =>
-  element.addEventListener('input', function(event) {
-    if (!(event.classList.contains('was-validated'))) {
+console.log(document.querySelectorAll('input'));
+let nodeList = document.querySelectorAll('input');
+for (var i = 0; i < nodeList.length; i++) {
+  nodeList[i].addEventListener('input', function(event) {
+    if (!form.classList.contains('was-validated')) {
       form.getElementsByClassName('btn').disabled = true;
     } else {
       form.getElementsByClassName('btn').disabled = false;
     }
-  })
-);
+  });
+}
 
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
