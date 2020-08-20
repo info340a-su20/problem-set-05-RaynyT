@@ -39,7 +39,6 @@ You can test this function by logging out the returned value and checking its
 attributes.
 */
 function createColorBox(color, size) {
-  console.log(size);
   var divElem = document.createElement('div');
   divElem.classList.add("d-inline-block");
   divElem.style.backgroundColor = color;
@@ -101,16 +100,17 @@ Tip: note that `COLORS_9` is an object, not an array! You'll need to use a
 Call your `renderPaletteTable()` method to display all the color palettes!
 */
 function renderPaletteTable() {
-  var parent = document.getElementsByTagName('main');
+  var parent = document.getElementById('content');
   for (const element in COLORS_9) {
-    renderPaletteRow(element, parent)
+    renderPaletteRow(COLORS_9[element], parent);
   }
 }
 renderPaletteTable();
 
 //Finally, remove the paragraph in the header that explains how to complete the 
 //problem.
-var par = document.getElementsByTagName('p:first').remove();
+var par = document.getElementsByTagName('p')[0];
+par.remove();
 
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
