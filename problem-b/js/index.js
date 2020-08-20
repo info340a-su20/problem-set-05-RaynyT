@@ -27,7 +27,7 @@ form.addEventListener('submit', function(event) {
     document.getElementsByClassName('alert').classList.remove("d-none");
   } else {
     form.classList.add("was-validated");
-    document.getElementsByTagName('button').disabled = true;
+    form.getElementsByClassName('btn').disabled = true;
   }
 });
 
@@ -93,14 +93,25 @@ function `validatePasswordMatch()`. This function should access both password
   Also change the `#passwordConfirmFeedback` element so its `textContent` is
   also blank (an empty string).
 */
-
+let pwd1 = document.getElementById('passwordInput');
+let pwd2 = document.getElementById('passwordConfirmInput');
+function validatePasswordMatch() {
+  if (pwd1 == pwd2) {
+    pwd2.setCustomValidity("");
+    pwd2.textContent = "";
+  } else {
+    pwd2.setCustomValidity("Passwords do not match");
+    pwd2.textContent = "Passwords do not match";
+  }
+}
 
 
 /* Assign the `validatePasswordMatch` function as the callback for `input` 
 events that happen on BOTH the `#passwordInput` and `#passwordConfirmInput`
 elements. You can select the elements individually or using `querySelectorAll()`.
 */
-
+pwd1.addEventListener('input', validatePasswordMatch);
+pwd2.addEventListener('input', validatePasswordMatch);
 
 
 /* Last you'll need to only enable the "submit" button if the form is valid. Use
@@ -114,8 +125,16 @@ if the <form> element has the `was-validated` class. If so, set the button's
 This should disable the button until all of the fields are valid, but only after
 the user tries to submit once (which is a polite user experience)
 */
-
-
+document.querySelectorAll('input').forEach(element =>
+  element.addEventListener('input', function(event) {
+    console.log(element);
+    if (!(event.classList.contains('was-validated'))) {
+      form.getElementsByClassName('btn').disabled = true;
+    } else {
+      form.getElementsByClassName('btn').disabled = false;
+    }
+  })
+);
 
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
